@@ -65,7 +65,7 @@ func Test_portainerClientImp_do(t *testing.T) {
 				server: httptest.NewUnstartedServer(nil),
 			},
 			args: args{
-				uri: string(0x7f),
+				uri: "WALALA?",
 			},
 			wantErr: true,
 		},
