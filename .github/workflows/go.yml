@@ -1,5 +1,4 @@
 name: Go
-uses: thatisuday/go-cross-build@v1.1.0
 
 on:
   push:
