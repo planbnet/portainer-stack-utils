@@ -21,3 +21,8 @@ jobs:
             name: 'psu'
             compress: 'true'
             dest: 'dist'
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with: 
+          name: portainer-stack-utils
+          path: dist
