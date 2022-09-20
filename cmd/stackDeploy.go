@@ -122,6 +122,7 @@ var stackDeployCmd = &cobra.Command{
 				EnvironmentVariables: newEnvironmentVariables,
 				StackFileContent:     stackFileContent,
 				Prune:                viper.GetBool("stack.deploy.prune"),
+				PullImage:            viper.GetBool("stack.deploy.pullImage"),
 				EndpointID:           endpoint.ID,
 			})
 			common.CheckError(err)
@@ -190,11 +191,13 @@ func init() {
 	stackDeployCmd.Flags().StringP("env-file", "e", "", "Path to a file with environment variables used during stack deployment.")
 	stackDeployCmd.Flags().Bool("replace-env", false, "Replace environment variables instead of merging them.")
 	stackDeployCmd.Flags().BoolP("prune", "r", false, "Prune services that are no longer referenced (only available for Swarm stacks).")
+	stackDeployCmd.Flags().BoolP("pull-image", "P", true, "Pull latest image version (only available for Swarm stacks).")
 	viper.BindPFlag("stack.deploy.stack-file", stackDeployCmd.Flags().Lookup("stack-file"))
 	viper.BindPFlag("stack.deploy.endpoint", stackDeployCmd.Flags().Lookup("endpoint"))
 	viper.BindPFlag("stack.deploy.env-file", stackDeployCmd.Flags().Lookup("env-file"))
 	viper.BindPFlag("stack.deploy.replace-env", stackDeployCmd.Flags().Lookup("replace-env"))
 	viper.BindPFlag("stack.deploy.prune", stackDeployCmd.Flags().Lookup("prune"))
+	viper.BindPFlag("stack.deploy.pullImage", stackDeployCmd.Flags().Lookup("pull-image"))
 }
 
 func loadStackFile(path string) (string, error) {

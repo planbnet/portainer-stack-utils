@@ -13,6 +13,7 @@ type StackUpdateOptions struct {
 	EnvironmentVariables []portainer.Pair
 	StackFileContent     string
 	Prune                bool
+	PullImage            bool
 	EndpointID           portainer.EndpointID
 }
 
@@ -21,6 +22,7 @@ type StackUpdateRequest struct {
 	StackFileContent string
 	Env              []portainer.Pair `json:",omitempty"`
 	Prune            bool
+	PullImage        bool
 }
 
 func (n *portainerClientImp) StackUpdate(options StackUpdateOptions) (err error) {
@@ -28,6 +30,7 @@ func (n *portainerClientImp) StackUpdate(options StackUpdateOptions) (err error)
 		Env:              options.EnvironmentVariables,
 		StackFileContent: options.StackFileContent,
 		Prune:            options.Prune,
+		PullImage:        options.PullImage,
 	}
 
 	err = n.DoJSONWithToken(fmt.Sprintf("stacks/%v?endpointId=%v", options.Stack.ID, options.EndpointID), http.MethodPut, http.Header{}, &reqBody, nil)
