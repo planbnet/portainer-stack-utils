@@ -23,3 +23,9 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+      
+    - name: Pubish Build Artifact
+      uses: actions/download-artifact@v3.0.0
+      with:
+        name: psu
+        path: ./portainer-stack-utils
