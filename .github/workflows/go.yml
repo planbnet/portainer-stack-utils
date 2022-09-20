@@ -1,31 +1,24 @@
 name: Go
+uses: thatisuday/go-cross-build@v1.1.0
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+    
 jobs:
-
-  build:
+  generate:
+    name: Generate cross-platform builds
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.18
-
-    - name: Build
-      run: go build -v ./...
-
-    - name: Test
-      run: go test -v ./...
-      
-    - name: Pubish Build Artifact
-      uses: actions/download-artifact@v3.0.0
-      with:
-        name: psu
-        path: ./portainer-stack-utils
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Generate build files
+        uses: thatisuday/go-cross-build@v1
+        with:
+            platforms: 'linux/amd64, darwin/amd64, windows/amd64'
+            package: 'demo'
+            name: 'program'
+            compress: 'true'
+            dest: 'dist'
